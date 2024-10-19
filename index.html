@@ -1,0 +1,130 @@
+<html>
+<head>
+<Title> Math Game </Title>
+<style>
+html
+{
+background-color: blanchedalmond;
+font-family: 'Courier New';
+font-size: 50;
+word-spacing: 10%;
+}
+div {
+margin-left: 400 px;
+}
+
+.score {
+border-color: black;
+border-style:groove;
+border-width: 10px;
+}
+#var_1{
+font-size: 1;
+}
+
+#var_2{
+font-size: 1;
+}
+
+#var_3{
+font-size: 1;
+}
+
+#answer {
+  background-color: lightblue;
+  border: 2px solid black;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+#userAnswer {
+  width: 200px;
+  height: 30px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  padding: 5px;
+}
+
+button {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+</style>
+</head>
+
+
+
+<H1>MATH GAME</H1>
+<P>One Wrong is GAME OVER</P>
+<div class="game-container">
+<p id="display"></p>
+  <span id="f"><p class="score">SCORE: </p> <p id="classfull2"  class="score">0</p><p id="var_1"></p>  <p id="var_2"></p><p id="var_3"></p></div></span>
+
+<div id="answer"> <input type="text" id="userAnswer" placeholder="Type Your Answer Here"> </div>
+<button onclick="checkAnswer()">Check Answer</button>
+
+<script>
+var var_1 = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0];
+var var_2 = ['+', '-'];
+var var_3 = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0];
+var sv = 0;
+var gameOver = false;
+
+function generate() {
+  if (gameOver) {
+    return; // If the game is over, don't generate new numbers
+  }
+
+  var index1 = Math.floor(Math.random() * var_1.length);
+  var number1 = var_1[index1];
+  document.getElementById("var_1").textContent = number1; 
+
+  var index2 = Math.floor(Math.random() * var_2.length);
+  var number2 = var_2[index2];
+  document.getElementById("var_2").textContent = number2;
+
+  var index3 = Math.floor(Math.random() * var_3.length);
+  var number3 = var_3[index3];
+  document.getElementById("var_3").textContent = number3; 
+
+  if (number3 > number1 && document.getElementById("var_2").innerHTML === '-') {
+    generate();
+  }else{
+    document.getElementById("display").innerHTML=number1 +number2+number3;
+    
+  }
+  
+}
+
+function checkAnswer() {
+  if (gameOver) {
+    return;
+  }
+
+  var userAnswer = document.getElementById("userAnswer").value;
+  var correctAnswer;
+
+  if (document.getElementById("var_2").textContent === '+') {
+    correctAnswer = parseInt(document.getElementById("var_1").textContent) + parseInt(document.getElementById("var_3").textContent);
+  } else {
+    correctAnswer = parseInt(document.getElementById("var_1").textContent) - parseInt(document.getElementById("var_3").textContent);
+  }
+
+  if (userAnswer == correctAnswer) {
+    alert("Correct!");
+    sv++;
+    document.getElementById("classfull2").textContent = sv;
+    generate();
+  } else {
+    alert("Incorrect. GAME OVER You scored " + sv +' point(s). Refresh to play again.');
+    gameOver = true;
+  }
+}
+
+generate();
+</script>
+</html>
